@@ -17,7 +17,8 @@ class WpProQuiz_Controller_Category
 
         return json_encode(array(
             'categoryId' => $category->getCategoryId(),
-            'categoryName' => $category->getCategoryName()
+            'categoryName' => $category->getCategoryName(),
+            'categoryTime' => $category->getCategoryTime()
         ));
     }
 

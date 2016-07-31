@@ -688,6 +688,7 @@ jQuery(document).ready(function ($) {
         var methode = {
             addCategory: function () {
                 var name = $.trim($('input[name="categoryAdd"]').val());
+                var time = $.trim($('input[name="categoryAddTime"]').val());
 
                 if (isEmpty(name)) {
                     return;
@@ -695,6 +696,7 @@ jQuery(document).ready(function ($) {
 
                 var data = {
                     categoryName: name,
+                    categoryTime: time,
                     type: 'quiz'
                 };
 
@@ -1136,6 +1138,11 @@ jQuery(document).ready(function ($) {
 
                 if ($this.val() == "-1") {
                     box.show();
+                } else {
+                    var currentOptionIndex = $this[0].selectedIndex;
+                    var currentOption = $this.find('option').get(currentOptionIndex);
+                    var currentCategoryTime = $(currentOption).data('time');
+                    $('input[name="categoryTime"]').val(currentCategoryTime);
                 }
 
             }).change();
@@ -1862,10 +1869,11 @@ jQuery(document).ready(function ($) {
                         });
                     },
 
-                    categoryEdit: function (id, name, type) {
+                    categoryEdit: function (id, name, time, type) {
                         var data = {
                             categoryId: id,
-                            categoryName: $.trim(name)
+                            categoryName: $.trim(name),
+                            categoryTime: $.trim(time)
                         };
 
                         if (global.isEmpty(name)) {
@@ -1880,6 +1888,7 @@ jQuery(document).ready(function ($) {
                             }
 
                             $('select[name="category' + type + '"] option[value="' + id + '"]').text(data.categoryName);
+                            $('select[name="category' + type + '"] option[value="' + id + '"]').data('time', data.categoryTime);
                             $('select[name="category' + type + '"]').change();
                         });
                     },
@@ -1959,6 +1968,7 @@ jQuery(document).ready(function ($) {
 
                     $('select[name="category"]').change(function () {
                         $('input[name="categoryEditText"]').val($(this).find(':selected').text());
+                        $('input[name="categoryEditTime"]').val($(this).find(':selected').data('time'));
                     }).change();
 
                     $('input[name="categoryDelete"]').click(function () {
@@ -1970,8 +1980,9 @@ jQuery(document).ready(function ($) {
                     $('input[name="categoryEdit"]').click(function () {
                         var id = $('select[name="category"] option:selected').val();
                         var text = $('input[name="categoryEditText"]').val();
+                        var time = $('input[name="categoryEditTime"]').val();
 
-                        methode.categoryEdit(id, text, '');
+                        methode.categoryEdit(id, text, time, '');
                     });
 
                     $('select[name="categoryQuiz"]').change(function () {
@@ -1988,7 +1999,7 @@ jQuery(document).ready(function ($) {
                         var id = $('select[name="categoryQuiz"] option:selected').val();
                         var text = $('input[name="categoryQuizEditText"]').val();
 
-                        methode.categoryEdit(id, text, 'Quiz');
+                        methode.categoryEdit(id, text, 0, 'Quiz');
                     });
 
                     $('#statistic_time_format_select').change(function () {
@@ -2143,13 +2154,15 @@ jQuery(document).ready(function ($) {
 
                     addCategory: function () {
                         var name = $.trim($('input[name="categoryAdd"]').val());
+                        var time = $.trim($('input[name="categoryAddTime"]').val());
 
                         if (global.isEmpty(name)) {
                             return;
                         }
 
                         var data = {
-                            categoryName: name
+                            categoryName: name,
+                            categoryTime: time,
                         };
 
                         global.ajaxPost('categoryAdd', data, function (json) {
@@ -2164,6 +2177,7 @@ jQuery(document).ready(function ($) {
                                 .attr('selected', 'selected');
 
                             $('select[name="category"]').append($option).change();
+                            $('input[name="categoryTime"]').val(data.categoryTime);
 
                         });
                     },
@@ -2451,6 +2465,11 @@ jQuery(document).ready(function ($) {
 
                         if ($this.val() == "-1") {
                             box.show();
+                        } else {
+                            var currentOptionIndex = $this[0].selectedIndex;
+                            var currentOption = $this.find('option').get(currentOptionIndex);
+                            var currentCategoryTime = $(currentOption).data('time');
+                            $('input[name="categoryTime"]').val(currentCategoryTime);
                         }
 
                     }).change();

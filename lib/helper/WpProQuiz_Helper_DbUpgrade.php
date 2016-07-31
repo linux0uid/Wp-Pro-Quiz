@@ -75,7 +75,8 @@ class WpProQuiz_Helper_DbUpgrade
         dbDelta("
 			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_category (
 			  category_id int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  category_name varchar(200) NOT NULL, 
+			  category_name varchar(200) NOT NULL,
+			  category_time int(10) unsigned NULL,
 			  type enum('QUESTION','QUIZ') NOT NULL DEFAULT 'QUESTION',
 			  PRIMARY KEY  (category_id)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
@@ -1133,5 +1134,14 @@ class WpProQuiz_Helper_DbUpgrade
 		');
 
         return 25;
+    }
+
+    private function upgradeDbV25()
+    {
+        $this->_wpdb->query('
+			ALTER TABLE  ' . $this->_wpdb->prefix . 'wp_pro_quiz_category
+				ADD  `category_time` INT(10) UNSIGNED NULL AFTER `category_name` ;
+		');
+        return 26;
     }
 }

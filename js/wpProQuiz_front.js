@@ -143,6 +143,7 @@ wpProQuizReady(function () {
             results: $e.find('.wpProQuiz_results'),
             quizStartPage: $e.find('.wpProQuiz_text'),
             timelimit: $e.find('.wpProQuiz_time_limit'),
+            timelimitQuestion: $e.find('.wpProQuiz_time_limit.question'),
             toplistShowInButton: $e.find('.wpProQuiz_toplistShowInButton'),
             listItems: $()
         };
@@ -162,6 +163,7 @@ wpProQuizReady(function () {
          */
         var timelimit = (function () {
             var _counter = config.timelimit;
+            var _counterQuestion = config.json[1].catTime;
             var _intervalId = 0;
             var instance = {};
 
@@ -169,8 +171,11 @@ wpProQuizReady(function () {
                 if (_counter) {
                     window.clearInterval(_intervalId);
                     globalElements.timelimit.hide();
+                    _counterQuestion = config.json[1].catTime;
                 }
             };
+
+            instance.nextQuestion = 0;
 
             instance.start = function () {
                 if (!_counter)
@@ -178,17 +183,25 @@ wpProQuizReady(function () {
 
                 var x = _counter * 1000;
 
-                var $timeText = globalElements.timelimit.find('span').text(plugin.methode.parseTime(_counter));
-                var $timeDiv = globalElements.timelimit.find('.wpProQuiz_progress');
+                var $timeText = globalElements.timelimit.find('span.time_left').text(plugin.methode.parseTime(_counter));
+                var $timeDiv = globalElements.timelimit.find('.wpProQuiz_progress:not(.question)');
+
+                var $timeTextQuestion = globalElements.timelimit.find('span.question_time_left').text(plugin.methode.parseTime(_counterQuestion));
+                var $timeDivQuestion = globalElements.timelimit.find('.wpProQuiz_progress.question');
 
                 globalElements.timelimit.show();
 
                 var beforeTime = +new Date();
+                var beforeTimeForQuestion = +new Date();
 
                 _intervalId = window.setInterval(function () {
 
+                    var y = _counterQuestion * 1000;
                     var diff = (+new Date() - beforeTime);
+                    var diffForQuestion = (+new Date() - beforeTimeForQuestion);
                     var elapsedTime = x - diff;
+                    var elapsedQuestionTime = y - diffForQuestion;
+
 
                     if (diff >= 500) {
                         $timeText.text(plugin.methode.parseTime(Math.ceil(elapsedTime / 1000)));
@@ -196,9 +209,32 @@ wpProQuizReady(function () {
 
                     $timeDiv.css('width', (elapsedTime / x * 100) + '%');
 
+                    if (diffForQuestion >= 500) {
+                        $timeTextQuestion.text(plugin.methode.parseTime(Math.ceil(elapsedQuestionTime / 1000)));
+                    }
+
+                    $timeDivQuestion.css('width', (elapsedQuestionTime / y * 100) + '%');
+
                     if (elapsedTime <= 0) {
                         instance.stop();
                         plugin.methode.finishQuiz(true);
+                    }
+                    if (elapsedQuestionTime <= 0) {
+                        plugin.methode.nextQuestion();
+                    }
+                    if (instance.nextQuestion == 1) {
+                        instance.nextQuestion = 0;
+                        var nextQuestionData = config.json[currentQuestion.index() + 1];
+                        if (nextQuestionData) {
+                            _counterQuestion = nextQuestionData.catTime;
+                        }
+                        if (_counterQuestion) {
+                            beforeTimeForQuestion = +new Date();
+                            globalElements.timelimitQuestion.show();
+                        } else {
+                            globalElements.timelimitQuestion.hide();
+                            _counterQuestion = config.timelimit;
+                        }
                     }
 
                 }, 16);
@@ -1221,6 +1257,7 @@ wpProQuizReady(function () {
 //				}
 
                 this.showQuestionObject(currentQuestion.next());
+                timelimit.nextQuestion = 1;
             },
 
             prevQuestion: function () {
@@ -1949,6 +1986,7 @@ wpProQuizReady(function () {
                         results: $e.find('.wpProQuiz_results'),
                         quizStartPage: $e.find('.wpProQuiz_text'),
                         timelimit: $e.find('.wpProQuiz_time_limit'),
+                        timelimitQuestion: $e.find('.wpProQuiz_time_limit.question'),
                         toplistShowInButton: $e.find('.wpProQuiz_toplistShowInButton'),
                         listItems: $()
                     };

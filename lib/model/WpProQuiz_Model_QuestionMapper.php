@@ -226,7 +226,8 @@ class WpProQuiz_Model_QuestionMapper extends WpProQuiz_Model_Mapper
             $this->_wpdb->prepare(
                 'SELECT
 								q.*,
-								c.category_name 
+								c.category_name,
+					            c.category_time
 							FROM 
 								' . $this->_table . ' AS q
 								LEFT JOIN ' . $this->_tableCategory . ' AS c
@@ -285,7 +286,8 @@ class WpProQuiz_Model_QuestionMapper extends WpProQuiz_Model_Mapper
         $results = $this->_wpdb->get_results($this->_wpdb->prepare("
 				SELECT
 					q.*,
-					c.category_name
+					c.category_name,
+					c.category_time
 				FROM
 					{$this->_table} AS q
 					LEFT JOIN {$this->_tableCategory} AS c

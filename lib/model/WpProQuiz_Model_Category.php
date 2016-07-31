@@ -8,6 +8,7 @@ class WpProQuiz_Model_Category extends WpProQuiz_Model_Model
 
     protected $_categoryId = 0;
     protected $_categoryName = '';
+    protected $_categoryTime = 0;
     protected $_type = WpProQuiz_Model_Category::CATEGORY_TYPE_QUESTION;
 
 
@@ -33,6 +34,18 @@ class WpProQuiz_Model_Category extends WpProQuiz_Model_Model
     public function getCategoryName()
     {
         return $this->_categoryName;
+    }
+
+    public function setCategoryTime($_categoryTime)
+    {
+        $this->_categoryTime = (int)$_categoryTime;
+
+        return $this;
+    }
+
+    public function getCategoryTime()
+    {
+        return $this->_categoryTime;
     }
 
     public function setType($_type)

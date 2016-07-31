@@ -61,15 +61,19 @@ class WpProQuiz_Model_CategoryMapper extends WpProQuiz_Model_Mapper
         if ($category->getCategoryId() == 0) {
             $this->_wpdb->insert($this->_tableCategory, array(
                 'category_name' => $category->getCategoryName(),
+                'category_time' => $category->getCategoryTime(),
                 'type' => empty($type) ? 'QUESTION' : $type
-            ), array('%s', '%s'));
+            ), array('%s', '%d', '%s'));
             $category->setCategoryId($this->_wpdb->insert_id);
         } else {
             $this->_wpdb->update(
                 $this->_tableCategory,
-                array('category_name' => $category->getCategoryName()),
+                array(
+                    'category_name' => $category->getCategoryName(),
+                    'category_time' => $category->getCategoryTime()
+                ),
                 array('category_id' => $category->getCategoryId()),
-                array('%s'),
+                array('%s', '%d'),
                 array('%d'));
         }
 

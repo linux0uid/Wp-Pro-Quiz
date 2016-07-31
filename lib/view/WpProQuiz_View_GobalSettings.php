@@ -180,13 +180,14 @@ class WpProQuiz_View_GobalSettings extends WpProQuiz_View_View
                                 </legend>
                                 <select name="category">
                                     <?php foreach ($this->category as $cat) {
-                                        echo '<option value="' . $cat->getCategoryId() . '">' . $cat->getCategoryName() . '</option>';
+                                        echo '<option value="' . $cat->getCategoryId() . '" data-time="' . $cat->getCategoryTime() . '">' . $cat->getCategoryName() . '</option>';
 
                                     } ?>
                                 </select>
 
                                 <div style="padding-top: 5px;">
                                     <input type="text" value="" name="categoryEditText">
+                                    <input type="text" value="" name="categoryEditTime">
                                 </div>
                                 <div style="padding-top: 5px;">
                                     <input type="button" value="<?php _e('Delete', 'wp-pro-quiz'); ?>"

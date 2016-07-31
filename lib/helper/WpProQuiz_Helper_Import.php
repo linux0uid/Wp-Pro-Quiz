@@ -163,6 +163,7 @@ class WpProQuiz_Helper_Import
                 } else {
                     $categoryModel = new WpProQuiz_Model_Category();
                     $categoryModel->setCategoryName($master->getCategoryName());
+                    $categoryModel->setCategoryTime($master->getCategoryTime());
                     $categoryModel->setType(WpProQuiz_Model_Category::CATEGORY_TYPE_QUIZ);
 
                     $categoryMapper->save($categoryModel);
@@ -206,6 +207,7 @@ class WpProQuiz_Helper_Import
                     } else {
                         $categoryModel = new WpProQuiz_Model_Category();
                         $categoryModel->setCategoryName($question->getCategoryName());
+                        $categoryModel->setCategoryTime($question->getCategoryTime());
                         $categoryMapper->save($categoryModel);
 
                         $question->setCategoryId($categoryModel->getCategoryId());

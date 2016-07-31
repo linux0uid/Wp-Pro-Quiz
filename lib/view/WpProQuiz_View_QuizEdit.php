@@ -81,7 +81,7 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
                                     </option>
                                     <?php
                                     foreach ($this->categories as $cat) {
-                                        echo '<option ' . ($this->quiz->getCategoryId() == $cat->getCategoryId() ? 'selected="selected"' : '') . ' value="' . $cat->getCategoryId() . '">' . $cat->getCategoryName() . '</option>';
+                                        echo '<option ' . ($this->quiz->getCategoryId() == $cat->getCategoryId() ? 'selected="selected"' : '') . ' value="' . $cat->getCategoryId() . '" data-time="' . $cat->getCategoryTime() . '">' . $cat->getCategoryName() . '</option>';
                                     }
                                     ?>
                                 </select>

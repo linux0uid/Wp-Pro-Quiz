@@ -33,6 +33,9 @@ class WpProQuiz_Model_Question extends WpProQuiz_Model_Model
     //0.27
     protected $_matrixSortAnswerCriteriaWidth = 20;
 
+    //0.28
+    protected $_categoryTime = 0;
+
     public function setId($_id)
     {
         $this->_id = (int)$_id;
@@ -257,6 +260,18 @@ class WpProQuiz_Model_Question extends WpProQuiz_Model_Model
     public function getCategoryName()
     {
         return $this->_categoryName;
+    }
+
+    public function setCategoryTime($_categoryTime)
+    {
+        $this->_categoryTime = (int)$_categoryTime;
+
+        return $this;
+    }
+
+    public function getCategoryTime()
+    {
+        return $this->_categoryTime;
     }
 
     public function setAnswerPointsDiffModusActivated($_answerPointsDiffModusActivated)

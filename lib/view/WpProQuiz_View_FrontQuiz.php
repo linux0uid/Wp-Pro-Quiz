@@ -641,8 +641,12 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
     {
         ?>
         <div style="display: none;" class="wpProQuiz_time_limit">
-            <div class="time"><?php _e('Time limit', 'wp-pro-quiz'); ?>: <span>0</span></div>
+            <div class="time"><?php _e('Time limit', 'wp-pro-quiz'); ?>: <span class="time_left">0</span></div>
             <div class="wpProQuiz_progress"></div>
+        </div>
+        <div style="display: none;" class="wpProQuiz_time_limit question">
+            <div class="time"><?php _e('Time limit', 'wp-pro-quiz'); ?>: <span class="question_time_left">0</span></div>
+            <div class="wpProQuiz_progress question"></div>
         </div>
         <?php
     }
@@ -821,6 +825,7 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                     $json[$question->getId()]['type'] = $question->getAnswerType();
                     $json[$question->getId()]['id'] = (int)$question->getId();
                     $json[$question->getId()]['catId'] = (int)$question->getCategoryId();
+                    $json[$question->getId()]['catTime'] = (int)$question->getCategoryTime();
 
                     if ($question->isAnswerPointsActivated() && $question->isAnswerPointsDiffModusActivated() && $question->isDisableCorrect()) {
                         $json[$question->getId()]['disCorrect'] = (int)$question->isDisableCorrect();

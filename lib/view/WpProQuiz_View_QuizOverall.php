@@ -99,6 +99,7 @@ class WpProQuiz_View_QuizOverall extends WpProQuiz_View_View
 
                     $setCategoryBox.find('#categoryAddBtn').click(function () {
                         var name = $.trim($setCategoryBox.find('input[name="categoryAdd"]').val());
+                        var time = $.trim($setCategoryBox.find('input[name="categoryAddTime"]').val());
 
                         if (isEmpty(name)) {
                             return;
@@ -106,6 +107,7 @@ class WpProQuiz_View_QuizOverall extends WpProQuiz_View_View
 
                         var data = {
                             categoryName: name,
+                            categoryTime: time,
                             type: 'quiz'
                         };
 
@@ -499,6 +501,7 @@ class WpProQuiz_View_QuizOverall extends WpProQuiz_View_View
                         <div style="display: none;" id="categoryAddBox">
                             <h4><?php _e('Create new category', 'wp-pro-quiz'); ?></h4>
                             <input type="text" name="categoryAdd" value="">
+                            <input type="text" name="categoryAddTime" value="">
                             <input type="button" class="button-secondary" name="" id="categoryAddBtn"
                                    value="<?php _e('Create', 'wp-pro-quiz'); ?>">
                         </div>

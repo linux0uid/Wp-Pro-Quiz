@@ -121,14 +121,16 @@ class WpProQuiz_View_QuestionEdit extends WpProQuiz_View_View
                                     </option>
                                     <?php
                                     foreach ($this->categories as $cat) {
-                                        echo '<option ' . ($this->question->getCategoryId() == $cat->getCategoryId() ? 'selected="selected"' : '') . ' value="' . $cat->getCategoryId() . '">' . $cat->getCategoryName() . '</option>';
+                                        echo '<option ' . ($this->question->getCategoryId() == $cat->getCategoryId() ? 'selected="selected"' : '') . ' value="' . $cat->getCategoryId() . '" data-time="' . $cat->getCategoryTime() . '">' . $cat->getCategoryName() . '</option>';
                                     }
                                     ?>
                                 </select>
+                                <input type="text" name="categoryTime" value="">
                             </div>
                             <div style="display: none;" id="categoryAddBox">
                                 <h4><?php _e('Create new category', 'wp-pro-quiz'); ?></h4>
                                 <input type="text" name="categoryAdd" value="">
+                                <input type="text" name="categoryAddTime" value="">
                                 <input type="button" class="button-secondary" name="" id="categoryAddBtn"
                                        value="<?php _e('Create', 'wp-pro-quiz'); ?>">
                             </div>
