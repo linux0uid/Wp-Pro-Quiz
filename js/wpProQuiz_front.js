@@ -165,7 +165,7 @@ wpProQuizReady(function () {
             var _counter = config.timelimit;
 
             var $listItem = globalElements.questionList.children();
-            var firstQuestion = $listItem.eq(0).show();
+            var firstQuestion = $listItem.eq(0);
             var firstQuestionId = firstQuestion.find(globalNames.questionList).data('question_id');
 
             var _counterQuestion = config.json[firstQuestionId].catTime;
@@ -229,7 +229,10 @@ wpProQuizReady(function () {
                     }
                     if (instance.nextQuestion == 1) {
                         instance.nextQuestion = 0;
-                        var nextQuestionData = config.json[currentQuestion.index() + 1];
+                        var countQuestion = currentQuestion.index();
+                        var nextQuestion = $listItem.eq(countQuestion);
+                        var nextQuestionId = nextQuestion.find(globalNames.questionList).data('question_id');
+                        var nextQuestionData = config.json[nextQuestionId];
                         if (nextQuestionData) {
                             _counterQuestion = nextQuestionData.catTime;
                         }
