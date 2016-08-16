@@ -163,7 +163,12 @@ wpProQuizReady(function () {
          */
         var timelimit = (function () {
             var _counter = config.timelimit;
-            var _counterQuestion = config.json[1].catTime;
+
+            var $listItem = globalElements.questionList.children();
+            var firstQuestion = $listItem.eq(0).show();
+            var firstQuestionId = firstQuestion.find(globalNames.questionList).data('question_id');
+
+            var _counterQuestion = config.json[firstQuestionId].catTime;
             var _intervalId = 0;
             var instance = {};
 
@@ -171,7 +176,7 @@ wpProQuizReady(function () {
                 if (_counter) {
                     window.clearInterval(_intervalId);
                     globalElements.timelimit.hide();
-                    _counterQuestion = config.json[1].catTime;
+                    _counterQuestion = config.json[firstQuestionId].catTime;
                 }
             };
 

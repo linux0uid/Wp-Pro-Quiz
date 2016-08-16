@@ -3,7 +3,7 @@
 class WpProQuiz_Helper_DbUpgrade
 {
 
-    const WPPROQUIZ_DB_VERSION = 25;
+    const WPPROQUIZ_DB_VERSION = 26;
 
     private $_wpdb;
     private $_prefix;
